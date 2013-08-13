@@ -1,4 +1,8 @@
-package SymulationManager;
+package SymulationManager.stats;
+
+import SymulationManager.manager.Simulation;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +13,14 @@ package SymulationManager;
  */
 public class StatisticsHandler {
 
+
+    public void createCharts(List<Simulation> simulations) {
+
+
+
+
+
+    }
 
 
 
