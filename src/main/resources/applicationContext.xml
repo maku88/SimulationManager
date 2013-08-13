@@ -14,15 +14,16 @@
         <!-- does not necessarily have to be the same name as the bean to be exported -->
         <property name="serviceName" value="SimulationManager"/>
         <property name="service" ref="manager"/>
-        <property name="serviceInterface" value="SymulationManager.manager.SimulationManager"/>
+        <property name="serviceInterface" value="SymulationManager.remote.SimulationManager"/>
         <!-- defaults to 1099 -->
         <property name="registryPort" value="1199"/>
     </bean>
 
-    <bean id="accountService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+    <bean id="proxyService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
         <property name="serviceUrl" value="rmi://localhost:1299/ProxyServerListener"/>
         <property name="serviceInterface" value="ProxyServer.RemoteProxyServer"/>
     </bean>
+
 
 
 </beans>

@@ -14,11 +14,38 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <ejbVersion>3.0</ejbVersion>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
+                    <generateClient>true</generateClient>
+                    <clientExcludes>
+                        <!-- this will exclude all files under com/example -->
+                        <clientExclude>SymulationManager/manager/*</clientExclude>
+                        <clientExclude>SymulationManager/ManagerApp.class</clientExclude>
+                        <clientExclude>applicationContext.xml</clientExclude>
+                    </clientExcludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.11</version>
       <scope>test</scope>
     </dependency>
 
@@ -48,10 +75,35 @@
 
       <dependency>
           <groupId>ProxyServer</groupId>
-          <artifactId>ProxyServer</artifactId>
+          <artifactId>ProxyServer-client</artifactId>
           <version>1.0</version>
       </dependency>
 
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>0.11.8</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.mockito</groupId>
+          <artifactId>mockito-all</artifactId>
+          <version>1.9.5</version>
+          <scope>test</scope>
+      </dependency>
+
+
+      <dependency>
+          <groupId>pl.mobiid.server.tester</groupId>
+          <artifactId>ProxySymulator-client</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+          <version>1.2.17</version>
+      </dependency>
 
 
   </dependencies>

@@ -1,9 +1,7 @@
 package SymulationManager;
 
-import SymulationManager.manager.SimulationManager;
+import SymulationManager.manager.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.InjectionMetadata;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
@@ -13,24 +11,22 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class App 
+public class ManagerApp
 {
     @Autowired
-    private SimulationManager manager;
+    private Manager manager;
 
     public static void main( String[] args )
     {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-
-        App p = context.getBean(App.class);
+        ManagerApp p = context.getBean(ManagerApp.class);
         p.start("dupa");
     }
 
     private void start(String s) {
-        System.out.println("app start " +s );
-        manager.registerSimulator("aaa");
-        manager.reportFinish("aaa");
-
+        System.out.println("app start " + s);
+        manager.setup("D:\\magisterka\\ProxyServer\\SymulationManager\\simulationPlan",1);
+        while(true){}
     }
 
 
