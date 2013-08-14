@@ -1,8 +1,11 @@
 package SymulationManager.stats;
 
 import SymulationManager.manager.Simulation;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,10 +16,23 @@ import java.util.List;
  */
 public class StatisticsHandler {
 
-
     public void createCharts(List<Simulation> simulations) {
 
+        ListMultimap<Integer, Simulation.SimulatorResults> simulationCases = ArrayListMultimap.create();
 
+
+
+        for(Simulation s : simulations) {
+            Map<String,Simulation.SimulatorResults> resultsMap = s.getSimulatorResultsMap();
+            simulationCases.putAll(s.getSimulationCaseID(), resultsMap.values());
+        }
+
+        System.out.println(simulationCases.size());
+
+
+
+//        LineChart chart = new LineChart("/");
+//        chart.createLineChart(,"wykres");
 
 
 
