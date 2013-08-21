@@ -20,9 +20,11 @@
     </bean>
 
     <bean id="proxyService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
-        <property name="serviceUrl" value="rmi://localhost:1299/ProxyServerListener"/>
+        <property name="serviceUrl" value="rmi://192.168.1.115:1299/ProxyServerListener"/>
         <property name="serviceInterface" value="ProxyServer.RemoteProxyServer"/>
     </bean>
+
+
 
 
 

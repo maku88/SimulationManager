@@ -32,7 +32,7 @@ public class ManagerTest {
         proxy = mock(RemoteProxyServer.class);
         manager.setProxyServer(proxy);
         URL rootfile= SimulationPlanReaderTest.class.getResource("/simulationPlan");
-        manager.setup(rootfile.getPath(),numberOfSimulatorsToRegister);
+        manager.setup(rootfile.getPath(),numberOfSimulatorsToRegister,"D:\\magisterka\\ProxyServer\\SymulationManager\\simulations");
     }
 
 

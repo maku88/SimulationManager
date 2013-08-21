@@ -33,15 +33,18 @@ public class SimulationPlanReader {
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String strLine;
             int simulationsCounter = 1;
+            int simulationCase = 1;
             while ((strLine = br.readLine()) != null)   {
                 String[] s = strLine.split(";");
 
                 int count = Integer.parseInt(s[0]);
 
                 for(int i = 0; i< count ; i++ ) {
-                    listOfSimulations.add(new Simulation(simulationsCounter,Integer.parseInt(s[1]),Integer.parseInt(s[2]),s[3],Integer.parseInt(s[4]),Integer.parseInt(s[5])));
+                    listOfSimulations.add(new Simulation(simulationCase,simulationsCounter,Integer.parseInt(s[1]),Integer.parseInt(s[2]),s[3],Integer.parseInt(s[4]),Integer.parseInt(s[5])));
                     simulationsCounter++;
                 }
+
+                simulationCase++;
 
             }
             in.close();

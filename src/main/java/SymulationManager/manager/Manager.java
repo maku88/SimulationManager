@@ -3,14 +3,17 @@ package SymulationManager.manager;
 import ProxyServer.RemoteProxyServer;
 import ProxyServer.stats.RequestStats;
 import SymulationManager.remote.SimulationManager;
+import SymulationManager.stats.StatisticsHandler;
 import lombok.Getter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.mobiid.server.tester.ProxySimulator.RemoteSimulator;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,12 +36,16 @@ public class Manager implements SimulationManager {
     private int simulationIndex = 0;
     private static Logger log = Logger.getLogger(Manager.class);
     private int numberOfSimulators;
+    private StatisticsHandler statisticsHandler = new StatisticsHandler();
 
     @Autowired RemoteProxyServer proxyServer;
 
+    private String dir="";
 
-    public void setup(String simulationPlanFilePath, int numberOfSimulators) {
+
+    public void setup(String simulationPlanFilePath, int numberOfSimulators, String simulationsDir) {
         this.numberOfSimulators = numberOfSimulators;
+        this.dir = simulationsDir;
         reader  = new SimulationPlanReader(simulationPlanFilePath);
         simulations = reader.read();
         currentSimulation = simulations.get(0);
@@ -77,6 +84,13 @@ public class Manager implements SimulationManager {
                 currentSimulation = simulations.get(simulationIndex);
                 log.info("NEW SIMULATION : " + currentSimulation.toString());
                 sendClearMessageToProxy(currentSimulation);
+
+                try {
+                    Thread.sleep(10000);
+                } catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+
                 sendStartMessageToSimulators(registeredSimulators,currentSimulation);
             }else {
 
@@ -115,9 +129,19 @@ public class Manager implements SimulationManager {
             }
         }
 
-        for(Simulation s : simulations) {
-            System.out.println(s.fullString());
+        LogWriter writer = new LogWriter();
+
+        long timestamp = new Date().getTime();
+
+        writer.writeProxyStats(simulations, dir+"\\proxy"+timestamp+ ".txt");
+        writer.writeSimulatorStats(simulations, dir+"\\symulator" + timestamp + ".txt");
+
+        try {
+            statisticsHandler.createCharts(simulations,dir,timestamp);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+
 
     }
 

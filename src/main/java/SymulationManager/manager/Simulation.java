@@ -18,6 +18,7 @@ import java.util.Map;
  */
 public class Simulation {
 
+    @Getter private int simulationCase;
     @Getter private int simulationID;
     @Getter private int numberOfTags;
     @Getter private int numberOfRequest;
@@ -27,7 +28,8 @@ public class Simulation {
     @Getter private Map<String, SimulatorResults> simulatorResultsMap = new HashMap<String, SimulatorResults>();
     @Getter private List<RequestStats> proxyStats = new ArrayList<RequestStats>();
 
-    public Simulation(int simulationID, int numberOfTags, int numberOfRequest, String cacheType, int ttl, int cacheSize) {
+    public Simulation(int simulationCase, int simulationID, int numberOfTags, int numberOfRequest, String cacheType, int ttl, int cacheSize) {
+        this.simulationCase = simulationCase;
         this.simulationID = simulationID;
         this.numberOfRequest = numberOfRequest;
         this.numberOfTags = numberOfTags;
@@ -48,7 +50,8 @@ public class Simulation {
     @Override
     public String toString() {
         return "Simulation{" +
-                "simulationID=" + simulationID +
+                "simulationCase=" + simulationCase +
+                ", simulationID=" + simulationID +
                 ", numberOfTags=" + numberOfTags +
                 ", numberOfRequest=" + numberOfRequest +
                 ", cacheType='" + cacheType + '\'' +
@@ -56,6 +59,12 @@ public class Simulation {
                 ", cacheSize=" + cacheSize +
                 '}';
     }
+
+    public String shortString() {
+        return simulationCase + ";" + simulationID + ";" + numberOfTags +";" + numberOfRequest + ";" + cacheType + ";" + ttl +";" + cacheSize + ";" ;
+    }
+
+
 
     public String fullString() {
         return "Simulation{" +
@@ -71,7 +80,7 @@ public class Simulation {
     }
 
     @Data
-    class SimulatorResults {
+    public class SimulatorResults {
 
         private String simulatorID;
         private  Map<Integer,Long> avgReadTime = new HashMap<Integer, Long>();
@@ -82,6 +91,7 @@ public class Simulation {
             this.avgReadTime.putAll(avgReadTime);
             this.numberOfMistakes = numberOfMistakes;
         }
+
     }
 
 
