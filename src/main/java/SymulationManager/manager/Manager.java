@@ -3,6 +3,7 @@ package SymulationManager.manager;
 import ProxyServer.RemoteProxyServer;
 import ProxyServer.stats.RequestStats;
 import SymulationManager.remote.SimulationManager;
+import SymulationManager.stats.GroupMode;
 import SymulationManager.stats.StatisticsHandler;
 import lombok.Getter;
 import org.apache.log4j.Logger;
@@ -138,6 +139,10 @@ public class Manager implements SimulationManager {
 
         try {
             statisticsHandler.createCharts(simulations,dir,timestamp);
+            statisticsHandler.createHitRatioCharts(simulations,dir,timestamp, GroupMode.SIZE);
+            statisticsHandler.createHitRatioCharts(simulations,dir,timestamp, GroupMode.TTL);
+            statisticsHandler.createAvgReadTimeFromProxy(simulations,dir,timestamp, GroupMode.TTL);
+            statisticsHandler.createAvgReadTimeFromProxy(simulations,dir,timestamp, GroupMode.SIZE);
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
